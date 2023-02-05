@@ -1,0 +1,52 @@
+package com.itis.android.recyclerview
+
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.RequestManager
+import com.itis.android.databinding.ItemFilmBinding
+import com.itis.android.network.response.FilmFromList
+import com.itis.android.room.FilmsRepository
+import com.itis.android.util.Constants
+import kotlinx.coroutines.CoroutineScope
+
+class FilmsAdapter(
+    private val list: MutableList<FilmFromList>,
+    private val glide: RequestManager,
+    private val repository: FilmsRepository?,
+    private val context: Context,
+    private val coroutineScope: CoroutineScope,
+    private val action: (Int) -> Unit
+) : RecyclerView.Adapter<FilmHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = FilmHolder(
+        ItemFilmBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        ),
+        glide,
+        repository,
+        context,
+        coroutineScope,
+        action
+    )
+
+    override fun onBindViewHolder(holder: FilmHolder, position: Int) {
+        holder.onBind(list[position])
+    }
+
+    override fun getItemCount(): Int = list.size
+
+    fun addFilms(filmsToAppend: List<FilmFromList>) {
+        list.addAll(filmsToAppend)
+        notifyItemRangeInserted(list.size - Constants.PAGE_SIZE, Constants.PAGE_SIZE)
+    }
+
+    fun updateFilmsRemovedFromFavourite(removedFilmsIds: Set<Int>) {
+        list.forEach {
+            if (it.id in removedFilmsIds)
+                it.isFavourite = false
+        }
+    }
+}
