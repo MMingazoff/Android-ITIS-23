@@ -26,10 +26,10 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
             cityId = it.getInt(CITY_ID)
         }
         binding = FragmentDescriptionBinding.inflate(layoutInflater)
-        getWeather()
+        initWeatherUi()
     }
 
-    private fun getWeather() {
+    private fun initWeatherUi() {
         lifecycleScope.launch {
             val weather = cityId?.let { id ->
                 Network.weatherApi.getWeather(id)

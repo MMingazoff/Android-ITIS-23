@@ -58,7 +58,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
 
     // Google location service
-    implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-location:21.0.1'
 
 
     // region Network

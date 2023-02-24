@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts.RequestMultiple
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import com.itis.android.R
 import com.itis.android.data.Network
 import com.itis.android.databinding.FragmentSearchBinding
@@ -34,12 +35,21 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         registerForActivityResult(RequestMultiplePermissions()) { perms ->
             val coarseLocationGranted = perms[Manifest.permission.ACCESS_COARSE_LOCATION]
             val fineLocationGranted = perms[Manifest.permission.ACCESS_FINE_LOCATION]
-            if (coarseLocationGranted == true && fineLocationGranted == true) {
-                fusedLocationClient?.lastLocation?.addOnSuccessListener {
-                    getAndSetWeather(it.latitude, it.longitude)
+            if (coarseLocationGranted == true || fineLocationGranted == true) {
+                fusedLocationClient?.lastLocation?.addOnSuccessListener { location ->
+                    if (location == null) {
+                        fusedLocationClient?.getCurrentLocation(
+                            Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+                            null
+                        )?.addOnSuccessListener {
+                            getAndSetCitiesWeather(it.latitude, it.longitude)
+                        }
+                        return@addOnSuccessListener
+                    }
+                    getAndSetCitiesWeather(location.latitude, location.longitude)
                 }
             } else {
-                getAndSetWeather(DEFAULT_LAT, DEFAULT_LON)
+                getAndSetCitiesWeather(DEFAULT_LAT, DEFAULT_LON)
             }
         }
 
@@ -63,7 +73,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         binding?.searchView?.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (query != null)
-                    getWeather(query)
+                    getWeatherInfo(query)
                 return false
             }
 
@@ -72,7 +82,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         })
     }
 
-    private fun getWeather(city: String) {
+    private fun getWeatherInfo(city: String) {
         lifecycleScope.launch {
             try {
                 val result = Network.weatherApi.getWeather(city)
@@ -94,17 +104,20 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         }
     }
 
-    private fun getAndSetWeather(latitude: Double, longitude: Double) {
+    private fun getAndSetCitiesWeather(latitude: Double, longitude: Double) {
         lifecycleScope.launch {
-            val cities = getCitiesWithWeather(latitude, longitude)
+            val cities = getCitiesWeather(latitude, longitude)
             withContext(Dispatchers.Main) {
-                setCitiesWithWeather(cities)
+                setCitiesWeather(cities)
                 binding?.progressBar?.visibility = View.GONE
             }
         }
     }
 
-    private suspend fun getCitiesWithWeather(latitude: Double, longitude: Double): List<WeatherUi> {
+    private suspend fun getCitiesWeather(
+        latitude: Double,
+        longitude: Double
+    ): List<WeatherUi> {
         val cities = Network.weatherApi.getNearestCitiesWeather(latitude, longitude).cities
         val citiesWithWeather = mutableListOf<WeatherUi>()
         cities.forEach {
@@ -120,7 +133,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         return citiesWithWeather
     }
 
-    private fun setCitiesWithWeather(cities: List<WeatherUi>) {
+    private fun setCitiesWeather(cities: List<WeatherUi>) {
         binding?.rvCities?.adapter = WeatherAdapter(
             cities,
             requireContext(),
@@ -146,7 +159,8 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     companion object {
-        private const val DEFAULT_LAT = 55.74
-        private const val DEFAULT_LON = 49.18
+        // Moscow coordinates
+        private const val DEFAULT_LAT = 55.75
+        private const val DEFAULT_LON = 37.62
     }
 }
