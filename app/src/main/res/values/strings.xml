@@ -8,4 +8,5 @@
     <string name="wind">%1$.1f m/s %2$s</string>
     <string name="pressure">%1$d hPa</string>
     <string name="temp_feels">Feels like: %1$.1f°C</string>
+    <string name="unknown_error">Something went wrong :(</string>
 </resources>

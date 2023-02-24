@@ -11,9 +11,11 @@ import com.itis.android.R
 import com.itis.android.data.Network
 import com.itis.android.data.response.WeatherResponse
 import com.itis.android.databinding.FragmentDescriptionBinding
+import com.itis.android.utils.showSnackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.net.UnknownHostException
 
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
@@ -31,12 +33,16 @@ class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
     private fun initWeatherUi() {
         lifecycleScope.launch {
-            val weather = cityId?.let { id ->
-                Network.weatherApi.getWeather(id)
-            }
-            withContext(Dispatchers.Main) {
-                if (weather != null)
-                    setWeatherInfo(weather)
+            try {
+                val weather = cityId?.let { id ->
+                    Network.weatherApi.getWeather(id)
+                }
+                withContext(Dispatchers.Main) {
+                    if (weather != null)
+                        setWeatherInfo(weather)
+                }
+            } catch (e: UnknownHostException) {
+                binding?.root?.showSnackbar(R.string.unknown_error)
             }
         }
     }

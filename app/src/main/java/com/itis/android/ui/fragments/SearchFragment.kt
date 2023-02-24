@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
+import java.net.UnknownHostException
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
@@ -106,10 +107,14 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private fun getAndSetCitiesWeather(latitude: Double, longitude: Double) {
         lifecycleScope.launch {
-            val cities = getCitiesWeather(latitude, longitude)
-            withContext(Dispatchers.Main) {
-                setCitiesWeather(cities)
-                binding?.progressBar?.visibility = View.GONE
+            try {
+                val cities = getCitiesWeather(latitude, longitude)
+                withContext(Dispatchers.Main) {
+                    setCitiesWeather(cities)
+                    binding?.progressBar?.visibility = View.GONE
+                }
+            } catch (e: UnknownHostException) {
+                binding?.root?.showSnackbar(R.string.unknown_error)
             }
         }
     }
