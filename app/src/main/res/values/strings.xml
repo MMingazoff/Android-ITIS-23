@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">AndroidHometasks23</string>
+    <string name="app_name">Weather app</string>
+    <string name="city_not_found">Sorry, can\'t find such city :(</string>
+    <string name="temp">%1$.1f°C</string>
+    <string name="search_hint">Weather in your city</string>
+    <string name="temp_range">H:%1$.1f°C  L:%2$.1f°C</string>
+    <string name="humidity">Humidity: %1$d%%</string>
+    <string name="wind">%1$.1f m/s %2$s</string>
+    <string name="pressure">%1$d hPa</string>
+    <string name="temp_feels">Feels like: %1$.1f°C</string>
 </resources>
