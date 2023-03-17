@@ -4,18 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.DescriptionFragment">
+    tools:context=".presentation.description.DescriptionFragment">
 
     <TextView
         android:id="@+id/tv_city_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintBottom_toTopOf="@+id/iv_temp_icon"
+        app:layout_constraintEnd_toEndOf="@+id/tv_temp"
+        app:layout_constraintStart_toStartOf="@+id/iv_temp_icon" />
 
     <TextView
         android:id="@+id/tv_temp"
@@ -25,7 +24,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@id/iv_temp_icon"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_desc"
         app:layout_constraintStart_toEndOf="@id/iv_temp_icon"
         app:layout_constraintTop_toTopOf="@id/iv_temp_icon" />
 
@@ -33,11 +32,11 @@
         android:id="@+id/iv_temp_icon"
         android:layout_width="70dp"
         android:layout_height="70dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/tv_desc"
         app:layout_constraintEnd_toStartOf="@id/tv_temp"
         app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_city_name" />
+        app:layout_constraintStart_toStartOf="@+id/tv_desc" />
 
     <TextView
         android:id="@+id/tv_wind"
@@ -86,11 +85,11 @@
         android:id="@+id/tv_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@+id/tv_temp"
-        app:layout_constraintStart_toStartOf="@+id/iv_temp_icon"
-        app:layout_constraintTop_toBottomOf="@+id/iv_temp_icon" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_temp_range"

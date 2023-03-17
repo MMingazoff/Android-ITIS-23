@@ -1,6 +1,6 @@
-package com.itis.android.ui.recyclerview
+package com.itis.android.domain
 
-data class WeatherUi(
+data class WeatherInfo(
     val id: Int,
     val city: String,
     val temp: Double,

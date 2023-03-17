@@ -1,15 +1,20 @@
-package com.itis.android.data
+package com.itis.android.di
 
 import com.itis.android.BuildConfig
 import com.itis.android.data.interceptors.ApiKeyInterceptor
 import com.itis.android.data.interceptors.MetricUnitsInterceptor
+import com.itis.android.data.weather.WeatherRepositoryImpl
+import com.itis.android.data.weather.datasource.WeatherApi
+import com.itis.android.domain.GetDetailedWeatherByCityIdUseCase
+import com.itis.android.domain.GetNearestCitiesWeatherInfoUseCase
+import com.itis.android.domain.GetWeatherByCityNameUseCase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object Network {
+object DataContainer {
     private const val BASE_URL = BuildConfig.API_ENDPOINT
 
     private val loggingInterceptor = HttpLoggingInterceptor().apply {
@@ -37,5 +42,14 @@ object Network {
             .build()
     }
 
-    val weatherApi: WeatherApi = retrofit.create(WeatherApi::class.java)
+    private val weatherApi: WeatherApi = retrofit.create(WeatherApi::class.java)
+
+    private val weatherRepository = WeatherRepositoryImpl(weatherApi)
+
+    val getWeatherByCityNameUseCase
+        get() = GetWeatherByCityNameUseCase(weatherRepository)
+    val getDetailedWeatherByCityIdUseCase
+        get() = GetDetailedWeatherByCityIdUseCase(weatherRepository)
+    val getNearestCitiesWeatherInfoUseCase
+        get() = GetNearestCitiesWeatherInfoUseCase(weatherRepository)
 }

@@ -1,4 +1,4 @@
-package com.itis.android.ui.recyclerview
+package com.itis.android.presentation.search.recyclerview
 
 import android.content.Context
 import android.graphics.Rect

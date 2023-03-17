@@ -1,4 +1,4 @@
-package com.itis.android.data.response
+package com.itis.android.data.weather.datasource.response
 
 import com.google.gson.annotations.SerializedName
 

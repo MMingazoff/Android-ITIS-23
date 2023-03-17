@@ -1,4 +1,4 @@
-package com.itis.android.ui.recyclerview
+package com.itis.android.presentation.search.recyclerview
 
 import android.content.Context
 import android.widget.TextView
@@ -7,21 +7,22 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.itis.android.R
 import com.itis.android.databinding.ItemWeatherBinding
+import com.itis.android.domain.CityWeatherInfo
 
 class WeatherHolder(
     private val binding: ItemWeatherBinding,
     private val context: Context,
-    private val onClick: (WeatherUi) -> Unit
+    private val onClick: (CityWeatherInfo) -> Unit
 ) : ViewHolder(binding.root) {
-    fun onBind(weatherUi: WeatherUi) {
+    fun onBind(weatherInfo: CityWeatherInfo) {
         binding.apply {
-            tvCity.text = weatherUi.city
-            tvTemp.text = context.getString(R.string.temp, weatherUi.temp)
-            setTempColor(tvTemp, weatherUi.temp)
+            tvCity.text = weatherInfo.name
+            tvTemp.text = context.getString(R.string.temp, weatherInfo.temp)
+            setTempColor(tvTemp, weatherInfo.temp)
             ivIcon.load(
-                "https://openweathermap.org/img/w/${weatherUi.icon}.png"
+                "https://openweathermap.org/img/w/${weatherInfo.weatherIcon}.png"
             )
-            root.setOnClickListener { onClick(weatherUi) }
+            root.setOnClickListener { onClick(weatherInfo) }
         }
     }
 
