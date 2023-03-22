@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import coil.load
 import com.itis.android.R
 import com.itis.android.databinding.ItemWeatherBinding
-import com.itis.android.domain.CityWeatherInfo
+import com.itis.android.domain.weather.CityWeatherInfo
 
 class WeatherHolder(
     private val binding: ItemWeatherBinding,

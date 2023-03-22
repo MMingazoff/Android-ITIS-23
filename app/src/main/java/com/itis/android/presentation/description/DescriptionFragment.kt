@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.itis.android.R
 import com.itis.android.databinding.FragmentDescriptionBinding
-import com.itis.android.domain.DetailedWeatherInfo
+import com.itis.android.domain.weather.DetailedWeatherInfo
 import com.itis.android.utils.showSnackbar
 
 class DescriptionFragment : Fragment(R.layout.fragment_description) {

@@ -1,4 +1,4 @@
-package com.itis.android.domain
+package com.itis.android.domain.weather
 
 data class WeatherInfo(
     val id: Int,

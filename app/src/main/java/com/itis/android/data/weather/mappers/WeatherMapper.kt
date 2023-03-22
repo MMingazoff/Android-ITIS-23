@@ -2,9 +2,9 @@ package com.itis.android.data.weather.mappers
 
 import com.itis.android.data.weather.datasource.response.MultipleWeatherResponse
 import com.itis.android.data.weather.datasource.response.WeatherResponse
-import com.itis.android.domain.CityWeatherInfo
-import com.itis.android.domain.DetailedWeatherInfo
-import com.itis.android.domain.WeatherInfo
+import com.itis.android.domain.weather.CityWeatherInfo
+import com.itis.android.domain.weather.DetailedWeatherInfo
+import com.itis.android.domain.weather.WeatherInfo
 
 fun WeatherResponse.toWeatherInfo() = WeatherInfo(
     id = id,

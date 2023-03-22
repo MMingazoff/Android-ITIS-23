@@ -6,16 +6,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.itis.android.di.App
 import com.itis.android.di.DataContainer
-import com.itis.android.domain.CityWeatherInfo
-import com.itis.android.domain.GetNearestCitiesWeatherInfoUseCase
-import com.itis.android.domain.GetWeatherByCityNameUseCase
-import com.itis.android.domain.WeatherInfo
+import com.itis.android.domain.geolocation.GeoLocation
+import com.itis.android.domain.geolocation.GetCurrentLocationUseCase
+import com.itis.android.domain.geolocation.GetLastLocationUseCase
+import com.itis.android.domain.weather.CityWeatherInfo
+import com.itis.android.domain.weather.GetNearestCitiesWeatherInfoUseCase
+import com.itis.android.domain.weather.GetWeatherByCityNameUseCase
+import com.itis.android.domain.weather.WeatherInfo
 import kotlinx.coroutines.launch
 
 class SearchViewModel(
     private val getWeatherByCityNameUseCase: GetWeatherByCityNameUseCase,
     private val getNearestCitiesWeatherInfoUseCase: GetNearestCitiesWeatherInfoUseCase,
+    private val getLastLocationUseCase: GetLastLocationUseCase,
+    private val getCurrentLocationUseCase: GetCurrentLocationUseCase
 ) : ViewModel() {
 
     private val _weatherInfo = MutableLiveData<WeatherInfo?>(null)
@@ -38,9 +44,22 @@ class SearchViewModel(
         getWeatherInfo(query)
     }
 
-    fun searchNearestCities(latitude: Double, longitude: Double) {
-        getNearestCitiesWeatherInfo(latitude, longitude)
+    fun searchNearestCities(permsGiven: Boolean) {
+        viewModelScope.launch {
+            getNearestCitiesWeatherInfo(
+                if (permsGiven) {
+                    getLocation()
+                } else {
+                    GeoLocation(DEFAULT_LON, DEFAULT_LAT)
+                }
+            )
+        }
     }
+
+    private suspend fun getLocation() =
+        getLastLocationUseCase().let {
+            it ?: getCurrentLocationUseCase()
+        }
 
     private fun getWeatherInfo(query: String) {
         viewModelScope.launch {
@@ -57,27 +76,31 @@ class SearchViewModel(
         }
     }
 
-    private fun getNearestCitiesWeatherInfo(latitude: Double, longitude: Double) {
-        viewModelScope.launch {
-            try {
-                _loading.value = true
-                _nearestCitiesWeatherInfo.value =
-                    getNearestCitiesWeatherInfoUseCase(latitude, longitude, 10)
-                _error.value = false
-            } catch (e: Exception) {
-                _error.value = true
-            } finally {
-                _loading.value = false
-            }
+    private suspend fun getNearestCitiesWeatherInfo(geoLocation: GeoLocation) {
+        try {
+            _loading.value = true
+            _nearestCitiesWeatherInfo.value =
+                getNearestCitiesWeatherInfoUseCase(geoLocation, 10)
+            _error.value = false
+        } catch (e: Exception) {
+            _error.value = true
+        } finally {
+            _loading.value = false
         }
     }
 
     companion object {
+        // Moscow coordinates
+        private const val DEFAULT_LAT = 55.75
+        private const val DEFAULT_LON = 37.62
+
         val Factory = viewModelFactory {
             initializer {
                 SearchViewModel(
                     DataContainer.getWeatherByCityNameUseCase,
                     DataContainer.getNearestCitiesWeatherInfoUseCase,
+                    App.getLastLocationUseCase,
+                    App.getCurrentLocationUseCase
                 )
             }
         }

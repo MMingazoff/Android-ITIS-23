@@ -4,10 +4,10 @@ import com.itis.android.data.weather.datasource.WeatherApi
 import com.itis.android.data.weather.mappers.toCityWeatherInfoList
 import com.itis.android.data.weather.mappers.toDetailedWeatherInfo
 import com.itis.android.data.weather.mappers.toWeatherInfo
-import com.itis.android.domain.CityWeatherInfo
-import com.itis.android.domain.DetailedWeatherInfo
-import com.itis.android.domain.WeatherInfo
-import com.itis.android.domain.WeatherRepository
+import com.itis.android.domain.weather.CityWeatherInfo
+import com.itis.android.domain.weather.DetailedWeatherInfo
+import com.itis.android.domain.weather.WeatherInfo
+import com.itis.android.domain.weather.WeatherRepository
 
 class WeatherRepositoryImpl(
     private val api: WeatherApi

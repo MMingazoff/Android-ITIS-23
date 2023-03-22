@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.itis.android.databinding.ItemWeatherBinding
-import com.itis.android.domain.CityWeatherInfo
+import com.itis.android.domain.weather.CityWeatherInfo
 
 class WeatherAdapter(
     private val context: Context,

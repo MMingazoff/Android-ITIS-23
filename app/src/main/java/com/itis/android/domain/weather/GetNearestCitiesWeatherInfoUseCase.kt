@@ -1,5 +1,6 @@
-package com.itis.android.domain
+package com.itis.android.domain.weather
 
+import com.itis.android.domain.geolocation.GeoLocation
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -9,10 +10,9 @@ class GetNearestCitiesWeatherInfoUseCase(
     private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     suspend operator fun invoke(
-        latitude: Double,
-        longitude: Double,
+        geoLocation: GeoLocation,
         count: Int
     ) = withContext(dispatcher) {
-        repository.getNearestCitiesWeather(latitude, longitude, count)
+        repository.getNearestCitiesWeather(geoLocation.lat, geoLocation.lon, count)
     }
 }

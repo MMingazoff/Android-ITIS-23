@@ -1,13 +1,16 @@
 package com.itis.android.di
 
+import android.content.Context
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.itis.android.BuildConfig
 import com.itis.android.data.interceptors.ApiKeyInterceptor
 import com.itis.android.data.interceptors.MetricUnitsInterceptor
 import com.itis.android.data.weather.WeatherRepositoryImpl
 import com.itis.android.data.weather.datasource.WeatherApi
-import com.itis.android.domain.GetDetailedWeatherByCityIdUseCase
-import com.itis.android.domain.GetNearestCitiesWeatherInfoUseCase
-import com.itis.android.domain.GetWeatherByCityNameUseCase
+import com.itis.android.domain.weather.GetDetailedWeatherByCityIdUseCase
+import com.itis.android.domain.weather.GetNearestCitiesWeatherInfoUseCase
+import com.itis.android.domain.weather.GetWeatherByCityNameUseCase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -52,4 +55,9 @@ object DataContainer {
         get() = GetDetailedWeatherByCityIdUseCase(weatherRepository)
     val getNearestCitiesWeatherInfoUseCase
         get() = GetNearestCitiesWeatherInfoUseCase(weatherRepository)
+
+    fun getFusedLocationClient(
+        context: Context
+    ): FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+
 }

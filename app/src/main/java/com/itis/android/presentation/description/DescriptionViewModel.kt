@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.itis.android.di.DataContainer
-import com.itis.android.domain.DetailedWeatherInfo
-import com.itis.android.domain.GetDetailedWeatherByCityIdUseCase
+import com.itis.android.domain.weather.DetailedWeatherInfo
+import com.itis.android.domain.weather.GetDetailedWeatherByCityIdUseCase
 import kotlinx.coroutines.launch
 
 class DescriptionViewModel(

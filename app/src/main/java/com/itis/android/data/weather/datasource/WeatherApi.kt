@@ -23,4 +23,5 @@ interface WeatherApi {
         @Query("lon") longitude: Double,
         @Query("cnt") count: Int = 10
     ): MultipleWeatherResponse
+
 }
