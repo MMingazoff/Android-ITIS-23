@@ -1,9 +1,9 @@
-package com.itis.android.ui
+package com.itis.android.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.itis.android.R
-import com.itis.android.ui.fragments.SearchFragment
+import com.itis.android.presentation.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

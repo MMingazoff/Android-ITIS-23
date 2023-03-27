@@ -1,7 +1,7 @@
-package com.itis.android.data
+package com.itis.android.data.weather.datasource
 
-import com.itis.android.data.response.MultipleWeatherResponse
-import com.itis.android.data.response.WeatherResponse
+import com.itis.android.data.weather.datasource.response.MultipleWeatherResponse
+import com.itis.android.data.weather.datasource.response.WeatherResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -23,4 +23,5 @@ interface WeatherApi {
         @Query("lon") longitude: Double,
         @Query("cnt") count: Int = 10
     ): MultipleWeatherResponse
+
 }
