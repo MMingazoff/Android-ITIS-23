@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.itis.android.di.App
-import com.itis.android.di.DataContainer
 import com.itis.android.domain.geolocation.GeoLocation
 import com.itis.android.domain.geolocation.GetCurrentLocationUseCase
 import com.itis.android.domain.geolocation.GetLastLocationUseCase
@@ -94,13 +92,18 @@ class SearchViewModel(
         private const val DEFAULT_LAT = 55.75
         private const val DEFAULT_LON = 37.62
 
-        val Factory = viewModelFactory {
+        fun provideFactory(
+            getWeatherByCityNameUseCase: GetWeatherByCityNameUseCase,
+            getNearestCitiesWeatherInfoUseCase: GetNearestCitiesWeatherInfoUseCase,
+            getLastLocationUseCase: GetLastLocationUseCase,
+            getCurrentLocationUseCase: GetCurrentLocationUseCase
+        ) = viewModelFactory {
             initializer {
                 SearchViewModel(
-                    DataContainer.getWeatherByCityNameUseCase,
-                    DataContainer.getNearestCitiesWeatherInfoUseCase,
-                    App.getLastLocationUseCase,
-                    App.getCurrentLocationUseCase
+                    getWeatherByCityNameUseCase,
+                    getNearestCitiesWeatherInfoUseCase,
+                    getLastLocationUseCase,
+                    getCurrentLocationUseCase,
                 )
             }
         }

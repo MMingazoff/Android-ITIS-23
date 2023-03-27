@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.itis.android.di.DataContainer
 import com.itis.android.domain.weather.DetailedWeatherInfo
 import com.itis.android.domain.weather.GetDetailedWeatherByCityIdUseCase
 import kotlinx.coroutines.launch
@@ -41,9 +40,11 @@ class DescriptionViewModel(
     }
 
     companion object {
-        val Factory = viewModelFactory {
+        fun provideFactory(
+            getDetailedWeatherByCityIdUseCase: GetDetailedWeatherByCityIdUseCase
+        ) = viewModelFactory {
             initializer {
-                DescriptionViewModel(DataContainer.getDetailedWeatherByCityIdUseCase)
+                DescriptionViewModel(getDetailedWeatherByCityIdUseCase)
             }
         }
     }
