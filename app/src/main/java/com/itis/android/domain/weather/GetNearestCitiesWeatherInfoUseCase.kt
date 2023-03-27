@@ -1,13 +1,14 @@
 package com.itis.android.domain.weather
 
+import com.itis.android.di.IoDispatcher
 import com.itis.android.domain.geolocation.GeoLocation
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class GetNearestCitiesWeatherInfoUseCase(
+class GetNearestCitiesWeatherInfoUseCase @Inject constructor(
     private val repository: WeatherRepository,
-    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
     suspend operator fun invoke(
         geoLocation: GeoLocation,

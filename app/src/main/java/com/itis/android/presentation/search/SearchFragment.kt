@@ -2,6 +2,7 @@ package com.itis.android.presentation.search
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,10 +14,16 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.itis.android.R
 import com.itis.android.databinding.FragmentSearchBinding
+import com.itis.android.di.App
+import com.itis.android.domain.geolocation.GetCurrentLocationUseCase
+import com.itis.android.domain.geolocation.GetLastLocationUseCase
+import com.itis.android.domain.weather.GetNearestCitiesWeatherInfoUseCase
+import com.itis.android.domain.weather.GetWeatherByCityNameUseCase
 import com.itis.android.presentation.description.DescriptionFragment
 import com.itis.android.presentation.search.recyclerview.SpaceItemDecoration
 import com.itis.android.presentation.search.recyclerview.WeatherAdapter
 import com.itis.android.utils.showSnackbar
+import javax.inject.Inject
 
 class SearchFragment : Fragment(R.layout.fragment_search) {
 
@@ -24,8 +31,25 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
 
     private var adapter: WeatherAdapter? = null
 
+    @Inject
+    lateinit var getWeatherByCityNameUseCase: GetWeatherByCityNameUseCase
+
+    @Inject
+    lateinit var getNearestCitiesWeatherInfoUseCase: GetNearestCitiesWeatherInfoUseCase
+
+    @Inject
+    lateinit var getLastLocationUseCase: GetLastLocationUseCase
+
+    @Inject
+    lateinit var getCurrentLocationUseCase: GetCurrentLocationUseCase
+
     private val searchViewModel: SearchViewModel by viewModels {
-        SearchViewModel.Factory
+        SearchViewModel.provideFactory(
+            getWeatherByCityNameUseCase,
+            getNearestCitiesWeatherInfoUseCase,
+            getLastLocationUseCase,
+            getCurrentLocationUseCase
+        )
     }
 
     @SuppressLint("MissingPermission")
@@ -37,6 +61,11 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 coarseLocationGranted == true || fineLocationGranted == true
             )
         }
+
+    override fun onAttach(context: Context) {
+        App.appComponent.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

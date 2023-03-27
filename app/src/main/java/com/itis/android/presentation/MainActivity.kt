@@ -3,10 +3,12 @@ package com.itis.android.presentation
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.itis.android.R
+import com.itis.android.di.App
 import com.itis.android.presentation.search.SearchFragment
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        App.appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (savedInstanceState != null)

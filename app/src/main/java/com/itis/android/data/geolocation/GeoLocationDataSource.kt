@@ -5,8 +5,9 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.Priority
 import com.itis.android.domain.geolocation.GeoLocation
 import kotlinx.coroutines.tasks.await
+import javax.inject.Inject
 
-class GeoLocationDataSource(
+class GeoLocationDataSource @Inject constructor(
     private val client: FusedLocationProviderClient
 ) {
     @SuppressLint("MissingPermission")

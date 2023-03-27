@@ -1,5 +1,6 @@
 package com.itis.android.presentation.description
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,15 +10,26 @@ import androidx.fragment.app.viewModels
 import coil.load
 import com.itis.android.R
 import com.itis.android.databinding.FragmentDescriptionBinding
+import com.itis.android.di.App
 import com.itis.android.domain.weather.DetailedWeatherInfo
+import com.itis.android.domain.weather.GetDetailedWeatherByCityIdUseCase
 import com.itis.android.utils.showSnackbar
+import javax.inject.Inject
 
 class DescriptionFragment : Fragment(R.layout.fragment_description) {
 
     private var binding: FragmentDescriptionBinding? = null
 
+    @Inject
+    lateinit var getDetailedWeatherByCityIdUseCase: GetDetailedWeatherByCityIdUseCase
+
     private val descriptionViewModel: DescriptionViewModel by viewModels {
-        DescriptionViewModel.Factory
+        DescriptionViewModel.provideFactory(getDetailedWeatherByCityIdUseCase)
+    }
+
+    override fun onAttach(context: Context) {
+        App.appComponent.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
