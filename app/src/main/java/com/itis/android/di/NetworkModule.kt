@@ -14,7 +14,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 
-
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class InterceptApiKey
