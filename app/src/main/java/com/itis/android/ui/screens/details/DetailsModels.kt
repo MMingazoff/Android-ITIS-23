@@ -1,8 +1,6 @@
 package com.itis.android.ui.screens.details
 
-sealed interface DetailAction {
-
-}
+sealed interface DetailAction
 
 sealed interface DetailsEvent {
 
