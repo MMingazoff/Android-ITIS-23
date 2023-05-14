@@ -7,15 +7,4 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="grey">#808080</color>
-    <color name="less_white">#E3E3E3</color>
-    <color name="blue">#2EA1FA</color>
-    <color name="primary">#FAB5BC</color>
-    <color name="p_light">#ffffff</color>
-    <color name="p_dark">#cb9ca1</color>
-    <color name="secondary">#f06292</color>
-    <color name="s_light">#ff94c2</color>
-    <color name="s_dark">#ba2d65</color>
-    <color name="on_p">#000000</color>
-    <color name="on_s">#000000</color>
 </resources>

@@ -1,0 +1,13 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id("com.android.application") version "8.1.0-beta01" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
+    id("io.gitlab.arturbosch.detekt") version "1.22.0"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
+}
+
+detekt {
+    source = files(projectDir)
+    parallel = true
+    config = files("${project.rootDir}/config/detekt/detekt.yml")
+}
