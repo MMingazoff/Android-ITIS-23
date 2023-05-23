@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">AndroidHometasks23</string>
+    <string name="app_name">Kinopoisk</string>
+    <string name="genres">Жанры:</string>
+    <string name="countries">Страны:</string>
 </resources>
