@@ -1,6 +1,6 @@
 package com.itis.android.domain.models
 
-class FilmTopModel(
+open class FilmTopModel(
     val id: Int,
     val name: String,
     val poster: String,
