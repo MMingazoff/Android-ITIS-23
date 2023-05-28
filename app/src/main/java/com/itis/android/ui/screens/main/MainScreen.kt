@@ -1,5 +1,6 @@
 package com.itis.android.ui.screens.main
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,8 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,7 +30,7 @@ import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.itis.android.domain.models.FilmTopModel
-import com.itis.android.ui.Screen
+import com.itis.android.ui.screens.navhost.Screen
 import com.itis.android.ui.theme.Theme
 import org.koin.androidx.compose.koinViewModel
 
@@ -39,12 +42,13 @@ fun MainScreen(
     val state = viewModel.state.collectAsStateWithLifecycle()
     val action by viewModel.action.collectAsStateWithLifecycle(null)
 
-    FilmsList(state = state.value, eventHandler = viewModel::event)
-
-    MainScreenActions(
-        navController = navController,
-        action = action
-    )
+    Surface(color = Theme.colors.primaryBackground) {
+        FilmsList(state = state.value, eventHandler = viewModel::event)
+        MainScreenActions(
+            navController = navController,
+            action = action
+        )
+    }
 }
 
 @Composable
@@ -63,7 +67,9 @@ fun FilmsList(
             item {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center),
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(16.dp),
                         color = Theme.colors.primaryText
                     )
                     eventHandler(MainEvent.LoadMore)
@@ -78,33 +84,47 @@ fun Film(
     film: FilmTopModel,
     onClick: (FilmTopModel) -> Unit
 ) {
-    Row(modifier = Modifier
-        .height(80.dp)
-        .clickable {
-            onClick(film)
-        }
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+            .height(100.dp)
+            .clickable {
+                onClick(film)
+            },
+        elevation = 8.dp,
+        backgroundColor = Theme.colors.secondaryBackground,
+        shape = Theme.shapes.cornersStyle
     ) {
-        AsyncImage(
-            model = cachingImage(url = film.poster),
-            contentDescription = null,
-            modifier = Modifier.fillMaxHeight()
-        )
-        Column(
-            modifier = Modifier
-                .height(56.dp)
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-        ) {
-            Text(
-                text = film.name,
-                color = Theme.colors.primaryText,
-                style = Theme.typography.body
+        Row {
+            AsyncImage(
+                model = cachingImage(url = film.poster),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(2.dp)
+                    .background(
+                        color = Theme.colors.primaryBackground,
+                        shape = Theme.shapes.cornersStyle
+                    ),
             )
-            Text(
-                text = film.year,
-                color = Theme.colors.primaryText,
-                style = Theme.typography.caption
-            )
+            Column(
+                modifier = Modifier
+                    .height(56.dp)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+            ) {
+                Text(
+                    text = film.name,
+                    color = Theme.colors.primaryText,
+                    style = Theme.typography.body
+                )
+                Text(
+                    text = film.year,
+                    color = Theme.colors.primaryText,
+                    style = Theme.typography.caption
+                )
+            }
         }
     }
 }

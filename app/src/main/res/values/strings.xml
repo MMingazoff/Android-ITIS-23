@@ -2,4 +2,7 @@
     <string name="app_name">Kinopoisk</string>
     <string name="genres">Жанры:</string>
     <string name="countries">Страны:</string>
+    <string name="settings">Settings</string>
+    <string name="films">Films</string>
+    <string name="stub">Stub</string>
 </resources>

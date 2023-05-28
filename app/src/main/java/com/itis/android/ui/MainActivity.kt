@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
+import com.itis.android.ui.screens.navhost.MainNavHost
 import com.itis.android.ui.screens.settings.LocalSettingsEventBus
 import com.itis.android.ui.screens.settings.SettingsEventBus
 import com.itis.android.ui.theme.Theme
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
                 CompositionLocalProvider(
                     LocalSettingsEventBus provides settingsEventBus
                 ) {
-                    MainNavigation()
+                    MainNavHost()
                 }
             }
         }

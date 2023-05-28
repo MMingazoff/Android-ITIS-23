@@ -5,7 +5,8 @@ import com.itis.android.data.remote.datasource.responses.FilmTopResponse
 import com.itis.android.domain.models.FilmModel
 import com.itis.android.domain.models.FilmTopModel
 
-fun FilmResponse.toFilmModel() = FilmModel(
+fun FilmResponse.toFilmModel(id: Int) = FilmModel(
+    id = id,
     name = name,
     poster = poster,
     description = description,

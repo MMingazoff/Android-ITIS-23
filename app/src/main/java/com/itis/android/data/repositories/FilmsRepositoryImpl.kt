@@ -18,6 +18,6 @@ class FilmsRepositoryImpl(
     }
 
     override suspend fun getFilm(id: Int): FilmModel = withContext(Dispatchers.IO) {
-        remote.getFilmById(id).toFilmModel()
+        remote.getFilmById(id).toFilmModel(id)
     }
 }
