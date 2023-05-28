@@ -53,7 +53,8 @@ fun Theme(
                 Size.Medium -> 28.sp
                 Size.Big -> 32.sp
             },
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold,
+            fontFamily = FontFamily.Monospace,
         ),
         body = TextStyle(
             fontSize = when (textSize) {
@@ -64,7 +65,7 @@ fun Theme(
             fontWeight = FontWeight.Normal
         ),
         toolbar = TextStyle(
-            fontFamily = FontFamily.Cursive,
+            fontFamily = FontFamily.Monospace,
             fontSize = when (textSize) {
                 Size.Small -> 14.sp
                 Size.Medium -> 16.sp

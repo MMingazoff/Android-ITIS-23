@@ -76,6 +76,7 @@ fun MainNavHost(
 ) {
     val items = listOf(
         Screen.Main,
+        Screen.Stub,
         Screen.Settings,
     )
     Scaffold(
